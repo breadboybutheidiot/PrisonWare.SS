@@ -66,6 +66,93 @@ end)
 local Button4 = KillerBox:AddButton('KillAll', function()
     loadstring(game:HttpGet("https://pastebin.com/raw/cbCUQ7pa"))()
 end)
+local Button5 = KillerBox:AddButton('CarFly', function()
+    loadstring(game:HttpGet('https://pastebin.com/raw/BbpyJPN6'))()
+end)
+local Button6 = KillerBox:AddButton('ArrestAll', function()
+    local function GetPos()
+	return game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+end
+ 
+local function GetCamPos()
+	return workspace.CurrentCamera.CFrame
+end
+ 
+local function GetTeam()
+	return game.Players.LocalPlayer.TeamColor.Name
+end
+
+function Arrest(Player, Time)
+	local Time = Time or 1
+	local savedcf = GetPos()
+	local savedcamcf = GetCamPos()
+	local savedteam = GetTeam()
+	if Player then
+		repeat wait()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Player.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1)
+			for i = 1,Time do
+				coroutine.wrap(function()
+					workspace.Remote.arrest:InvokeServer(Player.Character.Head)
+				end)()
+			end
+		until Player.Character:FindFirstChild("Head"):FindFirstChild("handcuffedGui")
+		wait()
+	end
+	workspace.Remote.loadchar:InvokeServer(nil, BrickColor.new(savedteam).Name)
+	game.Players.LocalPlayer.Character.Humanoid.Sit = false
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = savedcf
+	workspace.CurrentCamera.CFrame = savedcamcf
+end
+
+
+
+		for i,v in pairs(game.Players:GetPlayers()) do
+			if v ~= game.Players.LocalPlayer then
+				if v.TeamColor.Name == "Really red" then
+					Arrest(v, 30)
+				end
+			end
+		end
+end)
+local Button7 = KillerBox:AddButton('AntiKillAll', function()
+    local lp = game:GetService "Players".LocalPlayer
+if lp.Character:FindFirstChild "Head" then
+    local char = lp.Character
+    char.Archivable = true
+    local new = char:Clone()
+    new.Parent = workspace
+    lp.Character = new
+    wait(2)
+    local oldhum = char:FindFirstChildWhichIsA "Humanoid"
+    local newhum = oldhum:Clone()
+    newhum.Parent = char
+    newhum.RequiresNeck = false
+    oldhum.Parent = nil
+    wait(2)
+    lp.Character = char
+    new:Destroy()
+    wait(1)
+    newhum:GetPropertyChangedSignal("Health"):Connect(
+        function()
+            if newhum.Health <= 0 then
+                oldhum.Parent = lp.Character
+                wait(1)
+                oldhum:Destroy()
+            end
+        end)
+    workspace.CurrentCamera.CameraSubject = char
+    if char:FindFirstChild "Animate" then
+        char.Animate.Disabled = true
+        wait(.1)
+        char.Animate.Disabled = false
+    end
+    lp.Character:FindFirstChild "Head":Destroy()
+end
+if simulationradius then
+game:GetService("RunService").Heartbeat:Connect(function()
+setsimulationradius(1/0,1/0)
+end) end
+end)
 
 --[Toggles]--
 Tab1:AddToggle('Toggle1', {
